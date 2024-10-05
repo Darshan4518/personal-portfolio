@@ -4,6 +4,7 @@ import GradualSpacing from "./ui/gradual-spacing";
 import Particles from "./ui/particles";
 import { RainbowButton } from "./ui/rainbow-button";
 import TypingAnimation from "./ui/typing-animation";
+import ProfileImg from "../assets/profile.png";
 
 const HeroSection = () => {
   return (
@@ -44,7 +45,7 @@ const HeroSection = () => {
               achieve great things.
             </p>
             <a
-              href="path/to/your/resume.pdf"
+              href="https://drive.google.com/file/d/1N7NesPV3pCG9fn3KgnorOEfPC72JFfWj/view?usp=drive_link"
               target="_blank"
               rel="noopener noreferrer"
               className="z-50"
@@ -56,7 +57,7 @@ const HeroSection = () => {
           {/* Image Section */}
           <div className="w-full flex justify-center md:w-auto mb-6 md:mb-0">
             <img
-              src="https://as2.ftcdn.net/v2/jpg/05/76/65/21/1000_F_576652189_WK1JiTOwjKCFIJDJJLI1Q6RtwSfpgspu.jpg"
+              src={ProfileImg}
               width={800}
               height={800}
               alt="photo"
