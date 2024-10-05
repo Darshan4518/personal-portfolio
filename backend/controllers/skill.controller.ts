@@ -82,7 +82,6 @@ export const createSkill = async (
       message: "skill craeted successfully",
     });
   } catch (error: any) {
-    console.log(error);
     res.status(400).json({ success: false, error: error.message });
   }
 };
@@ -113,9 +112,6 @@ export const updateSkillById = async (
   try {
     const { id } = req.params;
     const { name, type, imageUrl } = req.body;
-    console.log(id);
-
-    console.log(name, type, imageUrl);
 
     // Check if a new image URL is provided and upload to Cloudinary
 
@@ -141,8 +137,6 @@ export const updateSkillById = async (
 
     res.json({ success: true, data: updatedSkill });
   } catch (error: any) {
-    console.log(error);
-
     res.status(400).json({ success: false, error: error.message });
   }
 };
