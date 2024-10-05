@@ -18,7 +18,7 @@ const Projects = () => {
 
   const fetchProjects = async (skip: number, limit: number) => {
     const response = await axios.get(
-      `http://localhost:8000/api/v1/projects?limit=${limit}&skip=${skip}`
+      `https://personal-portfolio-jzsa.onrender.com/api/v1/projects?limit=${limit}&skip=${skip}`
     );
     return response.data.projects;
   };

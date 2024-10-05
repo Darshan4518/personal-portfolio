@@ -13,7 +13,9 @@ interface Skill {
 
 export default function SkillsBox() {
   const fetchSkills = async () => {
-    const response = await axios.get(`http://localhost:8000/api/v1/skills/all`);
+    const response = await axios.get(
+      `https://personal-portfolio-jzsa.onrender.com/api/v1/skills/all`
+    );
     return response.data.skills;
   };
 
