@@ -116,6 +116,7 @@ const Projects = () => {
                 src={project?.imageUrl}
                 alt={project?.projectName}
                 className="w-full h-60 object-contain rounded-lg"
+                loading="lazy"
               />
               <div className="flex flex-wrap items-center gap-3 my-4">
                 {project?.techStack

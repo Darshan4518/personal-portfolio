@@ -34,6 +34,7 @@ const ProjectDetailPage = ({
                   src={selectedProject.imageUrl}
                   alt={selectedProject.projectName}
                   className="object-center object-contain w-full h-full"
+                  loading="lazy"
                 />
               </div>
             ) : (
