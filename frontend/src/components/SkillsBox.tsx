@@ -19,14 +19,17 @@ export default function SkillsBox() {
     return response.data.skills;
   };
 
-  const { isPending, data: skills } = useQuery({
+  const { isLoading, data: skills } = useQuery({
     queryKey: ["skills"],
     queryFn: fetchSkills,
+    staleTime: 600000,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
   });
 
   const skillCategoryRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  if (isPending) {
+  if (isLoading) {
     return (
       <div className="text-white h-full w-full flex justify-center items-center">
         <Loader className=" animate-spin size-10" />
@@ -133,6 +136,7 @@ const SkillCategory = forwardRef<HTMLDivElement, SkillCategoryProps>(
                 alt={skill.name}
                 width={24}
                 height={24}
+                loading="lazy"
                 className="w-6 h-6"
               />
               <span className="text-sm text-white">{skill.name}</span>

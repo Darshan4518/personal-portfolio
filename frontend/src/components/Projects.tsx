@@ -23,7 +23,7 @@ const Projects = () => {
     return response.data.projects;
   };
 
-  const { isPending, isFetching, data, isError } = useQuery({
+  const { isLoading, isFetching, data, isError } = useQuery({
     queryKey: ["projects", skip, limit],
     queryFn: () => fetchProjects(skip, limit),
     placeholderData: keepPreviousData,
@@ -50,7 +50,7 @@ const Projects = () => {
     return project?.type === activeTab;
   });
 
-  if (isPending) {
+  if (isLoading) {
     return (
       <div className="h-full w-full flex justify-center items-center">
         <Loader className="animate-spin h-10 w-10" />
