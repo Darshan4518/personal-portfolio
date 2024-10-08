@@ -12,17 +12,14 @@ export const getAllProjects = async (
     const limit = parseInt(req.query.limit as string) || 6;
     const skip = parseInt(req.query.skip as string) || 0;
 
-    // Fetch projects with pagination and only necessary fields
-    const projects = await Project.find(
-      {},
-      { projectName: 1, imageUrl: 1, techStack: 1, description: 1 }
-    )
+    // Fetch projects with pagination
+    const projects = await Project.find({})
       .sort({ createdAt: -1 })
       .limit(limit)
       .skip(skip);
 
-    // Fetch the total count (can be cached for performance)
-    const totalProjects = await getTotalProjects(); // Cached function
+    // Get total count for pagination info
+    const totalProjects = await Project.countDocuments({});
 
     return res.status(200).json({
       success: true,
@@ -34,13 +31,7 @@ export const getAllProjects = async (
       },
     });
   } catch (error: any) {
-    console.error("Error fetching projects:", error); // Logging error for debugging
-    return res
-      .status(500)
-      .json({
-        success: false,
-        message: "Server error. Please try again later.",
-      });
+    return res.status(400).json({ success: false, error: error.message });
   }
 };
 
