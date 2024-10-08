@@ -23,6 +23,8 @@ const skillSchema = new Schema<ISkill>(
   }
 );
 
+skillSchema.index({ createdAt: 1 });
+
 const Skill: Model<ISkill> =
   models.Skill || model<ISkill>("Skill", skillSchema);
 

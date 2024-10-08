@@ -25,6 +25,8 @@ const projectSchema = new Schema<IProject>(
   { timestamps: true }
 );
 
+projectSchema.index({ createdAt: 1 });
+
 const Project: Model<IProject> =
   models.Project || model<IProject>("Project", projectSchema);
 
