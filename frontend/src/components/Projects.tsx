@@ -5,8 +5,7 @@ import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { Loader } from "lucide-react";
-
-const ProjectDetailPage = lazy(() => import("./ProjectDailog"));
+import ProjectDetailPage from "./ProjectDailog";
 
 const Projects = () => {
   const [limit] = useState<number>(6);
