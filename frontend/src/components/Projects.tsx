@@ -1,54 +1,45 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useState, useEffect, useRef, lazy } from "react";
-import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
-import { Button } from "./ui/button";
+import { useState } from "react";
+
 import { Badge } from "./ui/badge";
 import { Loader } from "lucide-react";
 import ProjectDetailPage from "./ProjectDailog";
+import { Button } from "./ui/button";
 
 const Projects = () => {
-  const [limit] = useState<number>(6);
-  const [skip, setSkip] = useState<number>(0);
-  const [projects, setProjects] = useState<any[]>([]);
-  const [activeTab, setActiveTab] = useState<string>("All");
-  const cardsRef = useRef<HTMLDivElement[]>([]);
+  const [limit, setLimit] = useState<number>(6);
+
   const [selectedProject, setSelectedProject] = useState<any>(null);
   const [open, setOpen] = useState<boolean>(false);
 
-  const fetchProjects = async (skip: number, limit: number) => {
+  const fetchProjects = async () => {
     const response = await axios.get(
-      `https://personal-portfolio-jzsa.onrender.com/api/v1/projects?limit=${limit}&skip=${skip}`
+      `https://personal-portfolio-jzsa.onrender.com/api/v1/projects?limit=${limit}`
     );
     return response.data.projects;
   };
 
-  const { isLoading, isFetching, data, isError } = useQuery({
-    queryKey: ["projects", skip, limit],
-    queryFn: () => fetchProjects(skip, limit),
+  const { isLoading, data, isFetching, isError } = useQuery({
+    queryKey: ["projects", limit],
+    queryFn: () => fetchProjects(),
     placeholderData: keepPreviousData,
+    staleTime: 600000,
   });
 
-  useEffect(() => {
-    if (data && data.length) {
-      setProjects((prevProjects) => {
-        const existingIds = new Set(prevProjects.map((project) => project._id));
-        const newProjects = data.filter(
-          (project: any) => !existingIds.has(project._id)
-        );
-        return [...prevProjects, ...newProjects];
-      });
-    }
-  }, [data]);
+  //     setProjects((prevProjects) => {
+  //       const existingIds = new Set(prevProjects.map((project) => project._id));
+  //       const newProjects = data.filter(
+  //         (project: any) => !existingIds.has(project._id)
+  //       );
+  //       return [...prevProjects, ...newProjects];
+  //     });
+  //   }
+  // }, [data]);
 
   const handleNextPagination = () => {
-    setSkip((prevSkip) => prevSkip + limit);
+    setLimit((prev) => prev + 4);
   };
-
-  const filteredProjects = projects.filter((project: any) => {
-    if (activeTab === "All") return true;
-    return project?.type === activeTab;
-  });
 
   if (isLoading) {
     return (
@@ -77,35 +68,15 @@ const Projects = () => {
         I have worked on a wide range of projects. From web apps to android
         apps. Here are some of my projects.
       </h4>
-
-      <div className="max-w-7xl mx-auto flex justify-center">
-        <Tabs
-          defaultValue="All"
-          value={activeTab}
-          onValueChange={(value) => setActiveTab(value)}
-          className="mb-6"
-        >
-          <TabsList className="justify-center bg-transparent">
-            <TabsTrigger value="All" className="text-white">
-              All
-            </TabsTrigger>
-            <TabsTrigger value="website" className="text-white">
-              Web Apps
-            </TabsTrigger>
-            <TabsTrigger value="app" className="text-white">
-              Android Apps
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
-      </div>
+      {/* 
+    
 
       {/* Display filtered projects */}
       <div className="w-full flex flex-wrap items-center justify-center gap-4 md:gap-6">
-        {filteredProjects.length > 0 ? (
-          filteredProjects.map((project: any, index: number) => (
+        {data.length > 0 ? (
+          data.map((project: any) => (
             <div
               key={project?._id}
-              ref={(el) => (cardsRef.current[index] = el!)}
               className="w-full sm:w-1/2 md:w-[30%] cursor-pointer bg-gray-800 p-3 rounded-lg transition-transform duration-300 hover:scale-105 hover:shadow-lg"
               onClick={() => {
                 setSelectedProject(project);
@@ -136,7 +107,7 @@ const Projects = () => {
             </div>
           ))
         ) : (
-          <p className="text-gray-400">No projects found for {activeTab}.</p>
+          <p className="text-gray-400">No projects found</p>
         )}
       </div>
 
