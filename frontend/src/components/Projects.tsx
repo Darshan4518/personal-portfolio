@@ -1,11 +1,12 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, lazy } from "react";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { Loader } from "lucide-react";
-import ProjectDetailPage from "./ProjectDailog";
+
+const ProjectDetailPage = lazy(() => import("./ProjectDailog"));
 
 const Projects = () => {
   const [limit] = useState<number>(6);

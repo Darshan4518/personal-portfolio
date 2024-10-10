@@ -45,7 +45,7 @@ const HeroSection = () => {
               achieve great things.
             </p>
             <a
-              href="https://drive.google.com/file/d/1N7NesPV3pCG9fn3KgnorOEfPC72JFfWj/view?usp=drive_link"
+              href="https://drive.google.com/file/d/1DO541tW8wfMCwRcx2QCHdyj62TIAQHlM/view?usp=drive_link"
               target="_blank"
               rel="noopener noreferrer"
               className="z-50"
