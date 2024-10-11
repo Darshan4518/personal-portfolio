@@ -12,14 +12,10 @@ export const getAllProjects = async (
     const limit = parseInt(req.query.limit as string) || 6;
     const skip = parseInt(req.query.skip as string) || 0;
 
-    // Fetch projects with pagination
-    const projects = await Project.find({})
-      .sort({ createdAt: -1 })
-      .limit(limit)
-      .skip(skip);
-
-    // Get total count for pagination info
-    const totalProjects = await Project.countDocuments({});
+    const [projects, totalProjects] = await Promise.all([
+      Project.find({}).sort({ createdAt: -1 }).limit(limit).skip(skip).lean(),
+      Project.countDocuments({}),
+    ]);
 
     return res.status(200).json({
       success: true,
