@@ -5,8 +5,11 @@ const ProjectDetails = dynamic(
   () => import("../../_components/ProjectDetails")
 );
 
-const ProjectDetailsPage = async ({ params }: { params: { id: string } }) => {
+type Params = Promise<{ id: string }>;
+
+const ProjectDetailsPage = async ({ params }: { params: Params }) => {
   const { id } = await params;
+
   return <ProjectDetails id={id} />;
 };
 

@@ -1,15 +1,30 @@
+"use client";
 import { AdminLogin } from "@/lib/serverActions/authenticationAction";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 
-const LoginPage = () => {
+const LoginPage = async () => {
+  const handleSubmit = async (formData: FormData) => {
+    try {
+      const { success } = await AdminLogin(formData);
+      if (success) {
+        toast("loginned successfully");
+      }
+    } catch (error) {
+      toast("somthing error occurd");
+    }
+  };
   return (
     <div className="flex items-center justify-center min-h-screen bg-black text-green-500">
       <div className="w-full max-w-md p-8 border border-green-500 rounded-md shadow-lg">
         <h1 className="mb-6 text-3xl font-bold text-center tracking-widest animate-pulse">
           ADMIN LOGIN
         </h1>
-        <form action={AdminLogin} className="space-y-4">
+        <form
+          action={(formData: FormData) => handleSubmit(formData)}
+          className="space-y-4"
+        >
           <div>
             <label
               htmlFor="email"

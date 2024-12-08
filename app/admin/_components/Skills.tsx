@@ -2,6 +2,11 @@ import { getSkills } from "@/lib/serverActions/skillActions";
 import React from "react";
 import SkillForm from "./skillForm";
 import SkillList from "./skillList";
+import { ISkill } from "@/models/skill";
+
+export interface ISkillsList extends ISkill {
+  _id: string;
+}
 
 const Skills = async () => {
   const { data: skills } = await getSkills();
@@ -18,7 +23,7 @@ const Skills = async () => {
           <SkillForm />
         </div>
 
-        <SkillList skills={skills} />
+        <SkillList skills={(skills as ISkillsList[]) ?? []} />
       </div>
     </div>
   );

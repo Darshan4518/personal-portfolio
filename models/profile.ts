@@ -7,6 +7,7 @@ export interface IProfile extends Document {
   whoAmI: string;
   myExperience: string;
   technologiesIUse: string;
+  cv: string;
 }
 
 const ProfileSchema = new Schema({
@@ -16,6 +17,7 @@ const ProfileSchema = new Schema({
   whoAmI: { type: String, required: true },
   myExperience: { type: String, required: true },
   technologiesIUse: { type: String, required: true },
+  cv: { type: String, required: true },
 });
 
 export const Profile: Model<IProfile> =

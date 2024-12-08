@@ -43,10 +43,6 @@ const typeStyles: Record<
   },
 };
 
-interface IAchievementsData extends IAchievement {
-  _id: string;
-}
-
 const Achievements = async () => {
   const { data: achievements } = await getAchievements();
 
@@ -58,7 +54,7 @@ const Achievements = async () => {
       </div>
 
       <div className="flex w-full flex-wrap  gap-4 items-center justify-between  h-auto">
-        {achievements?.map((achievement: IAchievementsData) => {
+        {achievements?.map((achievement: IAchievement) => {
           const typeKey = achievement?.type?.toLowerCase() || "default";
           const styles = typeStyles[typeKey] || typeStyles.default;
           return (
@@ -68,7 +64,7 @@ const Achievements = async () => {
               } bg-black/30 rounded-md p-2 flex items-center max-w-sm h-[12vh] w-[20vw] ${
                 achievement.ongoing === "on" ? "opacity-50" : "opacity-100"
               }`}
-              key={achievement._id}
+              key={achievement.id}
             >
               <div className="flex-shrink-0 w-16 h-16">
                 <Image

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ContactForm from "./ContactForm";
 import { getProfile } from "@/lib/serverActions/profileActions";
+import { DownloadIcon } from "lucide-react";
 
 const LeftSidebar = async () => {
   const { data: profile } = await getProfile();
@@ -39,14 +40,23 @@ const LeftSidebar = async () => {
 
       {/* Occupation Section */}
       <div className="text-center lg:text-left mb-4">
-        <p className="uppercase text-sm text-gray-400">Occupation</p>
-        <p className="text-lg text-red-500 uppercase">{profile?.occupation}</p>
+        <p className="uppercase text-sm text-gray-400">Occupation :</p>
+        <p className="text-sm text-red-500 uppercase">{profile?.occupation}</p>
       </div>
 
       {/* Social Section */}
       <div className="text-center lg:text-left w-full sm:w-auto">
-        <p className="uppercase text-sm text-gray-400">Social</p>
+        <p className="uppercase text-sm text-gray-400">Social :</p>
         <ContactForm />
+      </div>
+      <div className="text-center lg:text-left w-full sm:w-auto">
+        <p className="uppercase text-sm text-gray-400">CV :</p>
+        <a href={profile?.cv} target="_blank">
+          <button className="w-full md:w-auto p-2 mt-2 flex items-center gap-2 text-xs font-bold uppercase text-red-500 border border-red-500 rounded transition-all hover:bg-red-500 hover:text-white">
+            <span>Resume | CV</span>
+            <DownloadIcon size={15} />
+          </button>
+        </a>
       </div>
     </aside>
   );

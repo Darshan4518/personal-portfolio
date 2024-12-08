@@ -2,10 +2,23 @@
 
 import nodemailer from "nodemailer";
 
-export const sendEmail = async (formData: FormData): Promise<any> => {
-  const name = formData.get("name") as string;
-  const email = formData.get("email") as string;
-  const message = formData.get("message") as string;
+interface EmailResponse {
+  success: boolean;
+  message: string;
+}
+
+export const sendEmail = async (formData: FormData): Promise<EmailResponse> => {
+  const name = formData.get("name") as string | null;
+  const email = formData.get("email") as string | null;
+  const message = formData.get("message") as string | null;
+
+  // Validate inputs
+  if (!name || !email || !message) {
+    return {
+      success: false,
+      message: "All fields are required.",
+    };
+  }
 
   const transporter = nodemailer.createTransport({
     service: "Gmail",
@@ -27,7 +40,7 @@ export const sendEmail = async (formData: FormData): Promise<any> => {
     });
 
     return { success: true, message: "Message sent successfully!" };
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error sending email:", error);
     return {
       success: false,

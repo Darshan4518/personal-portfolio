@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import body from "@/assets/body.png";
 import { getProfile } from "@/lib/serverActions/profileActions";
+import { DownloadIcon } from "lucide-react";
 
 const Profile = async () => {
   const { data: profile } = await getProfile();
@@ -39,7 +40,7 @@ const Profile = async () => {
         </div>
         <div className="flex flex-wrap gap-3">
           <p className="max-w-xs text-gray-500">My Education</p>
-          <div className="max-w-lg text-xs text-slate-300 space-y-2">
+          <div className="max-w-lg text-xs text-slate-300 s">
             <div>
               <p>Bachelor of Science in Computer Science</p>
               <p>
@@ -48,29 +49,21 @@ const Profile = async () => {
                 <span className=" text-red-400">2021 - 2024</span>
               </p>
             </div>
-            <div>
-              <p>Higher Secondary School Certificate</p>
-              <p>
-                I completed my class 12 high school education at Karnataka
-                Public School, Horohalli, Karnataka, where I studied Science.
-                <span className=" text-red-400">2019-2021</span>
-              </p>
-            </div>
-            <div>
-              <p>Secondary School Certificate</p>
-              <p>
-                I completed my high school education at Maralavadi Education
-                Society, Maralavadi, Karnataka.{" "}
-                <span className=" text-red-400">2016 - 2019</span>
-              </p>
-            </div>
           </div>
+        </div>
+        <div className="">
+          <a href={profile?.cv} target="_blank">
+            <button className="w-full md:w-auto p-2 mt-2 flex items-center gap-2 text-xs font-bold uppercase text-red-500 border border-red-500 rounded transition-all hover:bg-red-500 hover:text-white ">
+              <span>Resume | CV</span>
+              <DownloadIcon size={15} />
+            </button>
+          </a>
         </div>
       </div>
 
       {/* Image Section */}
       <div className="flex justify-center p-3 w-full lg:w-auto">
-        <div className="relative">
+        <div className="relative p-1">
           <div className="absolute inset-0 z-20 pointer-events-none">
             <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-red-600" />
             <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-red-600" />

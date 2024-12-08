@@ -1,14 +1,10 @@
 "use client";
 
 import { deleteSkill } from "@/lib/serverActions/skillActions";
-import { ISkill } from "@/models/skill";
 import Image from "next/image";
+import { ISkillsList } from "./Skills";
 
-interface Skills extends ISkill {
-  _id: string;
-}
-
-const SkillList = ({ skills }: { skills: Skills[] }) => {
+const SkillList = ({ skills }: { skills: ISkillsList[] }) => {
   return (
     <ul className="flex flex-wrap justify-evenly w-full gap-5">
       {skills &&

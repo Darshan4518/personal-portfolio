@@ -2,6 +2,11 @@ import React from "react";
 import ProjectForm from "./projectForm";
 import ProjectList from "./projectList";
 import { getAllProjects } from "@/lib/serverActions/projectActions";
+import { IProject } from "@/models/project";
+
+export interface IProjectsList extends IProject {
+  _id: string;
+}
 
 const Projects = async () => {
   const { data: projects } = await getAllProjects();
@@ -21,7 +26,7 @@ const Projects = async () => {
           <ProjectForm />
         </div>
 
-        <ProjectList projects={projects} />
+        <ProjectList projects={(projects as IProjectsList[]) ?? []} />
       </div>
     </div>
   );

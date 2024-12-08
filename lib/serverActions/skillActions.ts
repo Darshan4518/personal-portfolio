@@ -1,77 +1,110 @@
 "use server";
 
-import { SkillSchema } from "@/lib/schemas";
 import { connectToDatabase } from "@/lib/db";
-import cloudinary from "../cloudinary";
-import { Skill } from "@/models/skill";
+import { imageUpload } from "../cloudinary";
+import { Skill, ISkill } from "@/models/skill";
 import { revalidatePath } from "next/cache";
+import { ApiResponse } from "../types";
 
-export const createSkill = async (formData: FormData): Promise<any> => {
+// Define response structure
+
+// Create a new skill
+export const createSkill = async (formData: FormData): Promise<ApiResponse> => {
   try {
-    const name = formData.get("name")?.toString();
-    const image = formData.get("image") as File;
-    const type = formData.get("type")?.toString();
-    const pinned = formData.get("pinned")?.toString();
+    await connectToDatabase();
 
+    const name = formData.get("name") as string;
+    const image = formData.get("image") as File;
+    const type = formData.get("type") as string;
+    const pinned = formData.get("pinned") as string;
+
+    // Validate required fields
     if (!name || !image || !type) {
       throw new Error("All fields are required");
     }
 
-    const imageBuffer = await image.arrayBuffer();
-    const imageBase64 = Buffer.from(imageBuffer).toString("base64");
-    const imageDataUrl = `data:${image.type};base64,${imageBase64}`;
+    const cloudResponse = await imageUpload(image as File);
 
-    const cloudResponse = await cloudinary.uploader.upload(imageDataUrl);
-
+    // Create and save the skill
     const skill = new Skill({
       name,
-      image: cloudResponse.secure_url,
+      image: cloudResponse,
       pinned,
       type,
     });
 
     await skill.save();
+
+    // Revalidate cache
     revalidatePath("/admin/skills");
-    return { success: true };
+
+    return { success: true, data: { message: "Skill created successfully" } };
   } catch (error: any) {
-    return { success: false, error };
+    console.error("Error creating skill:", error.message);
+    return { success: false, error: error.message };
   }
 };
 
-export async function updateSkill(id: string, formData: FormData) {
+// Update an existing skill
+export const updateSkill = async (
+  id: string,
+  formData: FormData
+): Promise<ApiResponse> => {
   try {
     await connectToDatabase();
-    const validatedFields = SkillSchema.parse({
-      name: formData.get("name"),
-      image: formData.get("image"),
-      isPinned: formData.get("isPinned") === "true",
+
+    const name = formData.get("name") as string;
+    const type = formData.get("type") as string;
+    const pinned = formData.get("pinned") as string;
+    const image = formData.get("image") as File | null;
+
+    // Handle image update
+    const cloudResponse = await imageUpload(image as File);
+
+    await Skill.findByIdAndUpdate(id, {
+      name,
+      type,
+      pinned,
+      image: cloudResponse,
     });
 
-    await Skill.findByIdAndUpdate(id, validatedFields);
+    // Revalidate cache
     revalidatePath("/admin/skills");
-    return { success: true };
-  } catch (error: any) {
-    return { success: false, error: error.message };
-  }
-}
 
-export const deleteSkill = async (id: string) => {
-  try {
-    await connectToDatabase();
-    await Skill.findByIdAndDelete(id);
-    revalidatePath("/admin/skills");
-    return { success: true };
+    return { success: true, data: { message: "Skill updated successfully" } };
   } catch (error: any) {
+    console.error("Error updating skill:", error.message);
     return { success: false, error: error.message };
   }
 };
 
-export const getSkills = async () => {
+// Delete a skill
+export const deleteSkill = async (id: string): Promise<ApiResponse> => {
   try {
     await connectToDatabase();
-    const skills = await Skill.find();
-    return { success: true, data: JSON.parse(JSON.stringify(skills)) };
+
+    await Skill.findByIdAndDelete(id);
+
+    // Revalidate cache
+    revalidatePath("/admin/skills");
+
+    return { success: true, data: { message: "Skill deleted successfully" } };
   } catch (error: any) {
+    console.error("Error deleting skill:", error.message);
+    return { success: false, error: error.message };
+  }
+};
+
+// Get all skills
+export const getSkills = async (): Promise<ApiResponse<ISkill[]>> => {
+  try {
+    await connectToDatabase();
+
+    const skills = await Skill.find();
+
+    return { success: true, data: skills };
+  } catch (error: any) {
+    console.error("Error fetching skills:", error.message);
     return { success: false, error: error.message };
   }
 };

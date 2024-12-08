@@ -2,7 +2,11 @@ import { getAchievements } from "@/lib/serverActions/achievementActions";
 import React from "react";
 import AchievementForm from "./AchievementForm";
 import AchievementList from "./AchievementList";
+import { IAchievement } from "@/models/achievement";
 
+export interface IAchievementList extends IAchievement {
+  _id: string;
+}
 const Achievements = async () => {
   const { data: achievements } = await getAchievements();
 
@@ -17,10 +21,13 @@ const Achievements = async () => {
       </div>
 
       {/* Existing Achievements Section */}
-      <div className="mt-3 ">
+      <div className="mt-3">
         <h2 className="text-2xl font-semibold mb-4">Existing Achievements</h2>
-        <div className=" p-4 bg-black bg-opacity-75">
-          <AchievementList achievements={achievements} />
+        <div className="p-4 bg-black bg-opacity-75">
+          {/* Pass a default value if achievements is undefined */}
+          <AchievementList
+            achievements={(achievements as IAchievementList[]) ?? []}
+          />
         </div>
       </div>
     </div>

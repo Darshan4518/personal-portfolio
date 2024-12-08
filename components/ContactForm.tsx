@@ -1,10 +1,5 @@
 "use client";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -17,7 +12,7 @@ import { toast } from "sonner";
 const iceland = Iceland({ weight: "400", subsets: ["latin"] });
 
 const ContactForm = () => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
   const handleSubmit = async (formData: FormData) => {
     try {
       const response = await sendEmail(formData);
@@ -27,8 +22,8 @@ const ContactForm = () => {
       } else {
         toast(response.message || "Failed to send message. Please try again.");
       }
-    } catch (error: any) {
-      throw new Error(error.message);
+    } catch (error) {
+      toast("Something went wrong. Please try again later.");
     }
   };
   return (

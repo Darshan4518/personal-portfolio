@@ -1,6 +1,6 @@
 "use client";
 import { useAudioPlayerStore } from "@/store/useAudioPlayerStore";
-import { Check, Flag, Settings } from "lucide-react";
+import { Check, Settings } from "lucide-react";
 import React, { useState } from "react";
 
 const MusicController = () => {

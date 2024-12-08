@@ -12,12 +12,24 @@ import {
 import { useState } from "react";
 import { Iceland } from "next/font/google";
 import { createProfile } from "@/lib/serverActions/profileActions";
+import { toast } from "sonner";
 
 const iceland = Iceland({ weight: "400", subsets: ["latin"] });
 
 const ProfileForm = () => {
   const [open, setOpen] = useState(false);
 
+  const handleSubmit = async (formData: FormData) => {
+    try {
+      const { success } = await createProfile(formData);
+      if (success) {
+        toast("created successfully");
+        setOpen(false);
+      }
+    } catch (error) {
+      toast("somthing error occurd");
+    }
+  };
   return (
     <div className="">
       <Button
@@ -36,7 +48,7 @@ const ProfileForm = () => {
           </DialogHeader>
           <form
             className="grid grid-cols-1 md:grid-cols-2 gap-3 items-center"
-            action={createProfile}
+            action={handleSubmit}
           >
             <div className="space-y-2">
               <Label htmlFor="profilePhoto">Profile Photo</Label>

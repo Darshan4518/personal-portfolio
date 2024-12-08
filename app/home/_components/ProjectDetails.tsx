@@ -14,10 +14,10 @@ export default async function ProjectDetails({ id }: { id: string }) {
           <div className="lg:col-span-4 space-y-3">
             <section className=" p-4 rounded-lg ">
               <Image
-                src={project?.images[0]!}
+                src={project?.images[0] as string}
                 width={200}
                 height={200}
-                alt={project?.name!}
+                alt={project?.name as string}
                 className=" rounded-sm mx-auto"
               />
             </section>

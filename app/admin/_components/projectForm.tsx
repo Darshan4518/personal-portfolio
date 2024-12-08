@@ -13,12 +13,24 @@ import {
 import { useState } from "react";
 import { Iceland } from "next/font/google";
 import { createProject } from "@/lib/serverActions/projectActions";
+import { toast } from "sonner";
 
 const iceland = Iceland({ weight: "400", subsets: ["latin"] });
 
 const ProjectForm = () => {
   const [open, setOpen] = useState(false);
 
+  const handleSubmit = async (formData: FormData) => {
+    try {
+      const { success } = await createProject(formData);
+      if (success) {
+        toast("created successfully");
+        setOpen(false);
+      }
+    } catch (error) {
+      toast("somthing error occurd");
+    }
+  };
   return (
     <div>
       <Button
@@ -37,7 +49,7 @@ const ProjectForm = () => {
           </DialogHeader>
           <form
             className="grid grid-cols-1 md:grid-cols-2 gap-3 items-center  b"
-            action={createProject}
+            action={handleSubmit}
           >
             <div className="space-y-2 md:col-span-2">
               <Label htmlFor="name">Name</Label>

@@ -1,13 +1,9 @@
 "use client";
 
 import { deleteProject } from "@/lib/serverActions/projectActions";
-import { IProject } from "@/models/project";
+import { IProjectsList } from "./Projects";
 
-interface Projects extends IProject {
-  _id: string;
-}
-
-const ProjectList = ({ projects }: { projects: Projects[] }) => {
+const ProjectList = ({ projects }: { projects: IProjectsList[] }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
       {projects?.map((project) => (

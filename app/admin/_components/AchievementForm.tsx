@@ -13,11 +13,24 @@ import {
 import { useState } from "react";
 import { Iceland } from "next/font/google";
 import { createAchievement } from "@/lib/serverActions/achievementActions";
+import { toast } from "sonner";
 
 const iceland = Iceland({ weight: "400", subsets: ["latin"] });
 
 const AchievementForm = () => {
   const [open, setOpen] = useState(false);
+
+  const handleSubmit = async (formData: FormData) => {
+    try {
+      const { success } = await createAchievement(formData);
+      if (success) {
+        toast("created successfully");
+        setOpen(false);
+      }
+    } catch (error) {
+      toast("somthing error occurd");
+    }
+  };
 
   return (
     <div>
@@ -37,7 +50,7 @@ const AchievementForm = () => {
           </DialogHeader>
           <form
             className="grid grid-cols-1 md:grid-cols-2 gap-3 items-center max-w-5xl"
-            action={createAchievement}
+            action={handleSubmit}
           >
             <div className="space-y-2 md:col-span-2">
               <Label htmlFor="imageUpload">Upload Image</Label>

@@ -1,12 +1,19 @@
 "use server";
 
-import { AchievementSchema } from "@/lib/schemas";
 import { connectToDatabase } from "@/lib/db";
 import { revalidatePath } from "next/cache";
-import { Achievement } from "@/models/achievement";
-import cloudinary from "../cloudinary";
+import { Achievement, IAchievement } from "@/models/achievement";
+import { imageUpload } from "../cloudinary";
 
-export const createAchievement = async (formData: FormData): Promise<any> => {
+interface ApiResponse<T = any> {
+  success: boolean;
+  data?: T;
+  error?: string;
+}
+
+export const createAchievement = async (
+  formData: FormData
+): Promise<ApiResponse> => {
   try {
     await connectToDatabase();
 
@@ -26,14 +33,10 @@ export const createAchievement = async (formData: FormData): Promise<any> => {
       throw new Error("Image is required");
     }
 
-    const imageBuffer = await image.arrayBuffer();
-    const imageBase64 = Buffer.from(imageBuffer).toString("base64");
-    const imageDataUrl = `data:${image.type};base64,${imageBase64}`;
-
-    const cloudResponse = await cloudinary.uploader.upload(imageDataUrl);
+    const cloudResponse = await imageUpload(image as File);
 
     const achievement = new Achievement({
-      image: cloudResponse.secure_url,
+      image: cloudResponse,
       type,
       title,
       description,
@@ -45,46 +48,86 @@ export const createAchievement = async (formData: FormData): Promise<any> => {
 
     revalidatePath("/admin/achievements");
     return { success: true };
-  } catch (error: any) {
-    throw new Error(error.message);
+  } catch (error: unknown) {
+    return {
+      success: false,
+      error: (error as Error)?.message || "An unknown error occurred",
+    };
   }
 };
 
-export async function updateAchievement(id: string, formData: FormData) {
+// Update Achievement
+export async function updateAchievement(
+  id: string,
+  formData: FormData
+): Promise<ApiResponse> {
   try {
     await connectToDatabase();
-    const validatedFields = AchievementSchema.parse({
-      image: formData.get("image"),
-      type: formData.get("type"),
-      title: formData.get("title"),
-      description: formData.get("description"),
-      achievedDate: new Date(formData.get("achievedDate") as string),
-      ongoing: formData.get("ongoing") === "true",
-    });
 
-    await Achievement.findByIdAndUpdate(id, validatedFields);
+    const type = formData.get("type") as string;
+    const title = formData.get("title") as string;
+    const description = formData.get("description") as string;
+    const ongoing = formData.get("ongoing") as string;
+
+    const achievedDateRaw = formData.get("achievedDate");
+    const achievedDate = achievedDateRaw
+      ? new Date(achievedDateRaw as string)
+      : undefined;
+
+    const image = formData.get("image") as File;
+
+    if (!image) {
+      throw new Error("Image is required");
+    }
+
+    const cloudResponse = await imageUpload(image as File);
+    await Achievement.updateOne(
+      { _id: id },
+      {
+        $set: {
+          type,
+          title,
+          description,
+          ongoing,
+          image: cloudResponse,
+          achievedDate,
+        },
+      }
+    );
+
     return { success: true };
-  } catch (error: any) {
-    return { success: false, error: error.message };
+  } catch (error: unknown) {
+    return {
+      success: false,
+      error: (error as Error)?.message || "An unknown error occurred",
+    };
   }
 }
 
-export async function deleteAchievement(id: string) {
+// Delete Achievement
+export async function deleteAchievement(id: string): Promise<ApiResponse> {
   try {
     await connectToDatabase();
     await Achievement.findByIdAndDelete(id);
     return { success: true };
-  } catch (error: any) {
-    return { success: false, error: error.message };
+  } catch (error: unknown) {
+    return {
+      success: false,
+      error: (error as Error)?.message || "An unknown error occurred",
+    };
   }
 }
 
-export async function getAchievements() {
+// Get Achievements
+export async function getAchievements(): Promise<ApiResponse<IAchievement[]>> {
   try {
     await connectToDatabase();
     const achievements = await Achievement.find().sort({ ongoing: 1 });
     return { success: true, data: JSON.parse(JSON.stringify(achievements)) };
-  } catch (error: any) {
-    return { success: false, error: error.message };
+  } catch (error: unknown) {
+    return {
+      success: false,
+      error: (error as Error)?.message || "An unknown error occurred",
+    };
   }
 }

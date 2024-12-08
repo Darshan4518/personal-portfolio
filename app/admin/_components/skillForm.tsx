@@ -20,12 +20,23 @@ import {
 import { useState } from "react";
 import { Iceland } from "next/font/google";
 import { createSkill } from "@/lib/serverActions/skillActions";
+import { toast } from "sonner";
 
 const iceland = Iceland({ weight: "400", subsets: ["latin"] });
 
 const SkillForm = () => {
   const [open, setOpen] = useState(false);
-
+  const handleSubmit = async (formData: FormData) => {
+    try {
+      const { success } = await createSkill(formData);
+      if (success) {
+        toast("created successfully");
+        setOpen(false);
+      }
+    } catch (error) {
+      toast("somthing error occurd");
+    }
+  };
   return (
     <div>
       <Button
@@ -46,7 +57,7 @@ const SkillForm = () => {
           </DialogHeader>
           <form
             className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center max-w-5xl"
-            action={createSkill}
+            action={handleSubmit}
           >
             {/* Skill Name */}
             <div className="space-y-2 md:col-span-2">
