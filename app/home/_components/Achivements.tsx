@@ -53,7 +53,7 @@ const Achievements = async () => {
         <h1 className=" font-bold text-lg">Achievements</h1>
       </div>
 
-      <div className="flex w-full flex-wrap  gap-4 items-center justify-between  h-auto">
+      <div className="flex flex-col md:flex-row w-full flex-wrap  gap-4 items-center justify-between  h-auto">
         {achievements?.map((achievement: IAchievement) => {
           const typeKey = achievement?.type?.toLowerCase() || "default";
           const styles = typeStyles[typeKey] || typeStyles.default;
@@ -61,7 +61,7 @@ const Achievements = async () => {
             <div
               className={`border ${
                 styles.borderColor
-              } bg-black/30 rounded-md p-2 flex items-center max-w-sm h-[12vh] w-[20vw] ${
+              } bg-black/30 rounded-md p-2 flex items-center md:max-w-sm w-auto h-auto md:h-[12vh] md:w-[20vw] ${
                 achievement.ongoing === "on" ? "opacity-50" : "opacity-100"
               }`}
               key={achievement.id}
