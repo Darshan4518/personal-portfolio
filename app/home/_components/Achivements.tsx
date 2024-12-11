@@ -61,7 +61,7 @@ const Achievements = async () => {
             <div
               className={`border ${
                 styles.borderColor
-              } bg-black/30 rounded-md p-2 flex items-center max-w-sm h-[12vh] w-[20vw] ${
+              } bg-black/30 rounded-md p-2 flex items-center md:max-w-sm sm:h-[12vh] w-full sm:w-[20vw] ${
                 achievement.ongoing === "on" ? "opacity-50" : "opacity-100"
               }`}
               key={achievement.id}
