@@ -53,7 +53,7 @@ const Achievements = async () => {
         <h1 className=" font-bold text-lg">Achievements</h1>
       </div>
 
-      <div className="flex w-full flex-wrap  gap-4 items-center justify-between  h-auto">
+      <div className="flex flex-col md:flex-row w-full flex-wrap  gap-4 items-center justify-between  h-auto">
         {achievements?.map((achievement: IAchievement) => {
           const typeKey = achievement?.type?.toLowerCase() || "default";
           const styles = typeStyles[typeKey] || typeStyles.default;
