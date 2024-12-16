@@ -13,7 +13,16 @@ Check out the live application:
 ---
 
 ## 🖼️ Screenshots
-
+![Screenshot 2024-12-16 205653](https://github.com/user-attachments/assets/b28a087b-54b6-45be-9287-c1491ffde1f7)
+![Screenshot 2024-12-16 205721](https://github.com/user-attachments/assets/9f35ff5e-df1b-4e46-84a2-e5e70cb25377)
+![Screenshot 2024-12-16 205737](https://github.com/user-attachments/assets/87512058-3721-4a16-8d23-590f95c0f1fe)
+![Screenshot 2024-12-16 205849](https://github.com/user-attachments/assets/93f87cc2-23a8-425e-a770-f37ab774138c)
+![Screenshot 2024-12-16 211016](https://github.com/user-attachments/assets/099da49b-5570-40b7-a8fe-af80205376d8)
+![Screenshot 2024-12-16 211534](https://github.com/user-attachments/assets/c712347c-ff1c-4e99-9bc8-b07a3091b27b)
+![Screenshot 2024-12-16 212005](https://github.com/user-attachments/assets/23db2d6b-5f1f-48da-828f-191cfff5f240)
+![Screenshot 2024-12-16 212601](https://github.com/user-attachments/assets/3f0b9e19-0b1e-4ada-b0d5-b4319e1d8bb7)
+![Screenshot 2024-12-16 212633](https://github.com/user-attachments/assets/e0555771-0d97-4fc6-8047-d7d91ca72bc8)
+![Screenshot 2024-12-16 212701](https://github.com/user-attachments/assets/9dc45044-7c13-4251-86b0-4eec9807f623)
 
 
 ## 📚 Features
