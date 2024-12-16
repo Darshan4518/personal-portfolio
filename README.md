@@ -8,7 +8,7 @@ A **hacker-themed personal portfolio** web application built using cutting-edge 
 
 Check out the live application:
 
-**[Live Demo](https://personal-portfolio-tan-phi.vercel.app/https://personal-portfolio-tan-phi.vercel.app/)**
+**[Live Demo](https://personal-portfolio-tan-phi.vercel.app/)**
 
 ---
 
