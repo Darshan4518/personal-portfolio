@@ -8,7 +8,7 @@ A **hacker-themed personal portfolio** web application built using cutting-edge 
 
 Check out the live application:
 
-**[Live Demo](https://your-live-demo-link.com)**
+**[Live Demo](https://personal-portfolio-tan-phi.vercel.app/https://personal-portfolio-tan-phi.vercel.app/)**
 
 ---
 
@@ -178,7 +178,7 @@ Contributions are welcome! Feel free to open an issue or submit a pull request.
 
 For any inquiries, feel free to reach out:
 
-- **Email**: [your-email@example.com](mailto:your-email@example.com)
-- **LinkedIn**: [Your LinkedIn Profile](https://www.linkedin.com/in/your-profile)
-- **GitHub**: [Your GitHub Profile](https://github.com/your-username)
+- **Email**: [your-email@example.com](mailto:codewithdarshan45@gmail.com)
+- **LinkedIn**: [Your LinkedIn Profile](https://www.linkedin.com/in/darshan-s-172350331/)
+- **GitHub**: [Your GitHub Profile](https://github.com/Darshan4518)
 
