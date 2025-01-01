@@ -3,13 +3,16 @@ import { AdminLogin } from "@/lib/serverActions/authenticationAction";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { useRouter } from "next/router";
 
-const LoginPage = async () => {
+const LoginPage = () => {
+  const router = useRouter();
   const handleSubmit = async (formData: FormData) => {
     try {
       const { success } = await AdminLogin(formData);
       if (success) {
         toast("loginned successfully");
+        router.push("/admin");
       }
     } catch (error) {
       toast("somthing error occurd");

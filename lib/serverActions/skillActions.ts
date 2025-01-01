@@ -102,7 +102,7 @@ export const getSkills = async (): Promise<ApiResponse<ISkill[]>> => {
 
     const skills = await Skill.find();
 
-    return { success: true, data: skills };
+    return { success: true, data: JSON.parse(JSON.stringify(skills)) };
   } catch (error: any) {
     console.error("Error fetching skills:", error.message);
     return { success: false, error: error.message };

@@ -135,13 +135,16 @@ export const getProjects = async (
     const projects = await Project.find()
       .sort({ createdAt: -1 })
       .skip(skip)
-      .limit(limit);
+      .limit(limit)
+      .sort({
+        createdAt: -1,
+      });
 
     const totalProjects = await Project.countDocuments();
 
     return {
       success: true,
-      data: projects,
+      data: JSON.parse(JSON.stringify(projects)),
     };
   } catch (error: any) {
     return { success: false, error: error.message };
@@ -161,7 +164,7 @@ export const getProject = async (
       throw new Error("Project not found");
     }
 
-    return { success: true, data: project };
+    return { success: true, data: JSON.parse(JSON.stringify(project)) };
   } catch (error: any) {
     return { success: false, error: error.message };
   }
@@ -174,7 +177,7 @@ export const getAllProjects = async (): Promise<ApiResponse<IProject[]>> => {
 
     const projects = await Project.find();
 
-    return { success: true, data: projects };
+    return { success: true, data: JSON.parse(JSON.stringify(projects)) };
   } catch (error: any) {
     return { success: false, error: error.message };
   }

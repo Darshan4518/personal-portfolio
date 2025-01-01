@@ -10,7 +10,6 @@ export interface IProjectsList extends IProject {
 
 const Projects = async () => {
   const { data: projects } = await getAllProjects();
-
   return (
     <div className="p-3 h-full w-full text-green-400">
       {/* Main Title */}
