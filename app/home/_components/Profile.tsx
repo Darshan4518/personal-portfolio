@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import body from "@/assets/body.png";
 import { getProfile } from "@/lib/serverActions/profileActions";
-import { DownloadIcon } from "lucide-react";
+import { DownloadIcon, Github, Linkedin } from "lucide-react";
 
 const Profile = async () => {
   const { data: profile } = await getProfile();
@@ -51,13 +51,28 @@ const Profile = async () => {
             </div>
           </div>
         </div>
-        <div className="">
+        <div className=" flex items-start gap-4 justify-evenly ">
           <a href={profile?.cv} target="_blank">
             <button className="w-full md:w-auto p-2 mt-2 flex items-center gap-2 text-xs font-bold uppercase text-red-500 border border-red-500 rounded transition-all hover:bg-red-500 hover:text-white ">
               <span>Resume | CV</span>
               <DownloadIcon size={15} />
             </button>
           </a>
+          <div className="flex items-center justify-between gap-4">
+            <a
+              href={"https://www.linkedin.com/in/darshan-s-172350331/"}
+              target="_blank"
+            >
+              <button className="w-full md:w-auto p-2 mt-2 flex items-center gap-2 text-xs font-bold uppercase text-red-500 border border-red-500 rounded transition-all hover:bg-red-500 hover:text-white">
+                <Linkedin size={15} />
+              </button>
+            </a>
+            <a href={"https://github.com/Darshan4518"} target="_blank">
+              <button className="w-full md:w-auto p-2 mt-2 flex items-center gap-2 text-xs font-bold uppercase text-red-500 border border-red-500 rounded transition-all hover:bg-red-500 hover:text-white">
+                <Github size={15} />
+              </button>
+            </a>
+          </div>
         </div>
       </div>
 

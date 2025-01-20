@@ -49,6 +49,7 @@ const LeftSidebar = async () => {
         <p className="uppercase text-sm text-gray-400">Social :</p>
         <ContactForm />
       </div>
+
       <div className="text-center lg:text-left w-full sm:w-auto">
         <p className="uppercase text-sm text-gray-400">CV :</p>
         <a href={profile?.cv} target="_blank">

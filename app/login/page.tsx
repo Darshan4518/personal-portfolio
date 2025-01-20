@@ -3,7 +3,7 @@ import { AdminLogin } from "@/lib/serverActions/authenticationAction";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
   const router = useRouter();

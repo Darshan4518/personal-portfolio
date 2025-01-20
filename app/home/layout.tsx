@@ -34,7 +34,7 @@ export default function HomeLayout({
 
         {/* Main Children Content */}
         <div
-          className="flex-1 overflow-y-auto h-auto relative"
+          className="flex-1 overflow-y-auto h-auto relative lg:max-h-[70vh]"
           style={{
             backgroundImage: "url('/achivebg.png')",
           }}
